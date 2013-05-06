@@ -16,7 +16,7 @@ import smtplib #For sending emails
 # operator = One of {eq = equals, gt = greater than, lt = less than}
 # value = threshold to trigger a warning (usually, a perfect score)
 s = json.loads("""[
-	{"title":"yelp-recsys-2013","operator":"gt","value":0},
+	{"title":"yelp-recsys-2013","operator":"eq","value":0},
 	{"title":"yelp-recruiting","operator":"eq","value":0},
 	{"title":"kdd-cup-2013-author-disambiguation","operator":"gt","value":0.99},
 	{"title":"kdd-cup-2013-author-paper-identification-challenge","operator":"gt","value":0.99},
