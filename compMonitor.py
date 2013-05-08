@@ -9,7 +9,12 @@ import urllib2
 import numpy as np
 import json
 import smtplib #For sending emails
+import logging
 #==============================================================================
+
+# Configure log file
+logging.basicConfig(filename="/Users/wcuk/Kaggle/leaderboardScan.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.info("Scan started")
 
 # Competition settings (JSON)
 # title = URL of competition
@@ -21,7 +26,8 @@ s = json.loads("""[
 	{"title":"kdd-cup-2013-author-disambiguation","operator":"gt","value":0.99},
 	{"title":"kdd-cup-2013-author-paper-identification-challenge","operator":"gt","value":0.99},
 	{"title":"titanic-gettingStarted","operator":"eq","value":1},
-	{"title":"cause-effect-pairs","operator":"gt","value":0.99}
+	{"title":"cause-effect-pairs","operator":"gt","value":0.99},
+	{"title":"facial-keypoints-detection","operator":"eq","value":0}
 	]""")
 
 # Optional: load email creditials from a secrets file
@@ -68,7 +74,8 @@ for competition in range(0,len(s)):
 		print(w)
 		warnings = warnings + "\n" + w
 	
-if warnings != "":	# Send email 
+if warnings != "":	# Send email
+	logging.error(warnings)
 	TEXT = "The following issues were found during an automated scan of Kaggle's public leaderboard scores:\n" + warnings
 	SUBJECT = "Kaggle Leaderboard Police - Scan Result"
 	message = """\From: %s\nTo: %s\nSubject: %s\n\n%s
@@ -84,4 +91,5 @@ if warnings != "":	# Send email
 	except:
 	    print("Failed to send email.")
 else:
-	print("No warnings found :)")
+	logging.info("No warnings found")
+
